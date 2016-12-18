@@ -1,7 +1,7 @@
 C_SOURCES = $(wildcard  kernel/*.c drivers/*.c)
 CFLAGS = -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 		 -nostartfiles -nodefaultlibs -ffreestanding \
-		 -Wall -Wextra -Werror -O0 -m32
+		 -Wall -Wextra -Werror -O0 -m32 -I./headers -include ./headers/types.h
 LDFLAGS = -m elf_i386
 AS = nasm
 ASFLAGS = -f elf32

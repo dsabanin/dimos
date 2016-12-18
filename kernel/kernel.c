@@ -1,7 +1,7 @@
-#include "../drivers/screen.h"
+#include "drivers/screen.h"
 
-int mystrlen(char* str) {
-	unsigned int len = 0;
+size_t mystrlen(char* str) {
+	size_t len = 0;
 	char* cur = str;
 	while(*cur != '\0') {
 		len++;
@@ -10,8 +10,26 @@ int mystrlen(char* str) {
 	return len;
 }
 
-void  main() {
+void main() {
 	clear_screen();
 	kprint("Arrived in C kernel code\n");
 	kprint("VELKAM!\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("6\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("1\n");
+	kprint("5\n");
+	kprint("1\n\n\n");
 }

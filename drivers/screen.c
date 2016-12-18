@@ -1,5 +1,6 @@
-#include "screen.h"
-#include "../kernel/ports.h"
+#include "drivers/screen.h"
+#include "kernel/ports.h"
+#include "kernel/util.h"
 
 /*  Print a char on the  screen  at col , row , or at  cursor  position  */
 void print_char(char character, int col, int row, char attribute_byte) {
@@ -36,9 +37,31 @@ void print_char(char character, int col, int row, char attribute_byte) {
 	// two  bytes  ahead  of the  current  cell.
 	// Make  scrolling  adjustment , for  when we  reach  the  bottom
 	// of the  screen.
-	// offset = handle_scrolling(offset);
 	//  Update  the  cursor  position  on the  screen  device.
+	offset = handle_scrolling(offset);
 	set_cursor(offset);
+}
+
+int handle_scrolling(int offset) {
+	if(offset < MAX_ROWS*MAX_COLS*2) {
+		return offset;
+	}
+
+	for(int i=1; i < MAX_ROWS; i++) {
+		memory_copy((char *) get_screen_offset(0, i) + VIDEO_ADDRESS,
+					(char *) get_screen_offset(0, i-1) + VIDEO_ADDRESS,
+					MAX_COLS*2);
+	}
+
+	char *last_line = (char *) get_screen_offset(0, MAX_ROWS-1) + VIDEO_ADDRESS;
+
+	for(int i=0; i < MAX_COLS*2; i++) {
+		last_line[i] = 0;
+	}
+
+	offset -= MAX_COLS*2;
+
+	return offset;
 }
 
 int get_screen_offset(int col, int row) {
